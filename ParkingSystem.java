@@ -137,8 +137,83 @@ class bike extends facilities{
 
   
 }
+class grid{
+  public int[][] parking_area=new int[4][3];
+  int i,j;
+  void initialize()
+  {
+    for(i=0;i<4;i++)
+      {
+        for(j=0;j<3;j++)
+          {
+            parkin_area[i][j]=0;
+          }
+      }
+  }
+  void showgrid()
+  {
+     for(i=0;i<4;i++)
+      {
+        for(j=0;j<3;j++)
+          {
+            System.out.println(parkin_area[i][j]);
+          }
+      }
+    
+  }
+  boolean bikegeneral()
+  {
+    for(i=0;i<3;i++)
+      {
+        if(parkin_area[0][i]==0)
+        {
+          return true;
+        }
+      }
+    return false;
+  }
+  boolean bikepremium()
+  {
+    for(i=0;i<3;i++)
+      {
+        if(parkin_area[1][i]==0)
+        {
+          return true;
+        }
+      }
+    return false;
+  }
+  boolean cargeneral()
+  {
+    for(i=0;i<3;i++)
+      {
+        if(parkin_area[2][i]==0)
+        {
+          return true;
+        }
+      }
+    return false;
+  }
+  boolean carpremium()
+  {
+    for(i=0;i<3;i++)
+      {
+        if(parkin_area[3][i]==0)
+        {
+          return true;
+        }
+      }
+    return false;
+  }
+  void book(int r,int c)
+  {
+    parking_area[r][c]=1;
+    System.out.println("We have successfully booked your parking\nYour Parking No. is "+((r*3)+(c+1)))
+  }
+  
+}
 
-class ParkingSystem {
+class Main {
   public static void main(String[] args) {
     
     System.out.println("Hello world!");
