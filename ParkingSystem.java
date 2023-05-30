@@ -251,8 +251,8 @@ class Exit extends Facilities{
         }
     }
 
-    public void receipt_generation() {
-        System.out.println("-----PARKIN PARADISE-----");
+    public void receipt_generation(UserDetails usr) {
+        System.out.println("\n-----PARKIN PARADISE-----\n");
         System.out.println("Name: " + this.name);
         System.out.println("License No.: " + this.license_no);
         System.out.println("Parking No.: " + this.parking_no);
@@ -286,8 +286,8 @@ public class Main {
         
         System.out.println("*****Welcome to PARKIN PARADISE!*****");
         
-        int i = 4;
-        while (i != 0) {
+        int ch=0;
+        do {
             System.out.println("Select Class\n1. General\n2. Premium");
             System.out.print("Your choice: ");
             cat = sc.nextInt();
@@ -397,17 +397,12 @@ public class Main {
             }
             
             System.out.println("Do you want to continue(0/1)");
-            int y = sc.nextInt();
-            if (y == 0) {
-                break;
-            }
-            
-            i--;
-        }
+            ch = sc.nextInt();
+        }while(ch!=0);
         
         System.out.println("Your Parking Ticket Details: ");
         usr.generateSecurityKey();
-        System.out.println("\tParking number: "+usr.getParkingNo());
+        System.out.println("\tParking number: "+g.getParkingNo());
         System.out.println("\tCategory: "+usr.getCategory());
         System.out.println("\tGenerated Security key: "+usr.getSecurityKey()+"\n\tPlease keep it private to you\n");
         
@@ -428,7 +423,7 @@ public class Main {
         
         int s;
         do{
-            s = e.exitParking();
+            s = e.exitParking(usr);
         }while(s==1);
         
         e.receipt_generation();
