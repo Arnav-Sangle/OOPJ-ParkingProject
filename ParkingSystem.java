@@ -6,7 +6,7 @@ class UserDetails {
     int security_key;
     String vehicle_type;
     int parking_no;
-    int category;
+    String category;
     
     public void get_user_details() {
         Scanner sc = new Scanner(System.in);
@@ -24,7 +24,6 @@ class UserDetails {
     public void generateSecurityKey() {
         Random rand = new Random();
         int key = rand.nextInt(10000);
-        System.out.println("Your Generated Security Key is "+key+" Please keep it private to you");
         this.security_key = key;
     }
 
@@ -44,16 +43,16 @@ class UserDetails {
         this.parking_no = x;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return this.category;
     }
 
-    public void setCategory(int x) {
+    public void setCategory(String x) {
         this.category = x;
     }
 }
 
-class Facilities {
+class Facilities extends UserDetails{
 
     protected int choice;
     protected int costC = 0;
@@ -101,7 +100,7 @@ class Car extends Facilities {
                 System.out.println("Thank You ");
             }
         }
-        System.out.println(costC);
+        // System.out.println(costC);
     }
 }
 
@@ -138,8 +137,7 @@ class Bike extends Facilities {
             }
         }
         // this.costB=costB;
-        
-        System.out.println(costB);
+        // System.out.println(costB);
     }
     
 }
@@ -236,16 +234,20 @@ class Grid extends UserDetails {
 
 
 
-
-class Exit extends UserDetails {
-    public void exitParking(UserDetails obj) {
+class Exit extends Facilities{
+    public int exitParking(UserDetails obj) {
         Scanner sc = new Scanner(System.in);
         
         System.out.println("Enter security key: ");
         int usrKey = sc.nextInt();
-        if (usrKey == this.security_key) {
+        if (usrKey == obj.getSecurityKey()) {
             // parkNo delete from hashmap    // grid
             System.out.print("Exited from Parking area successfully!");
+            return 0;
+        }
+        else {
+            System.out.print("Wrong Securiy key");
+            return 1;
         }
     }
 
@@ -277,49 +279,68 @@ public class Main {
         int cat = 0;
         UserDetails usr = new UserDetails();
         Grid g = new Grid();
+        Exit e = new Exit();
         
         usr.get_user_details();     //inputing user details during entry
         g.initialize();
         
+        System.out.println("*****Welcome to PARKIN PARADISE!*****");
+        
         int i = 4;
         while (i != 0) {
             System.out.println("Select Class\n1. General\n2. Premium");
+            System.out.print("Your choice: ");
             cat = sc.nextInt();
-            usr.setCategory(cat);
             
+            if(cat==1) {
+                usr.setCategory("General");
+            }
+            else {
+                usr.setCategory("Premium");
+            }
             
-            if (usr.vehicle_type.equals("bike") && usr.getCategory == 1) {
+            if (usr.vehicle_type.equals("bike") && cat == 1) {
             // System.out.println(g.bikegeneral()+"bike general");
                 if (g.bikegeneral() == true) {
                     g.showgrid();
-                    System.out.println("Enter row and column(Choose where 0 is there):\n" +
+                    System.out.println("");
+                    System.out.print("Enter row and column(Choose where 0 is there):\n" +
                         "---GuideLines to Choose Row and Column---\n" +
-                        "Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
+                        " Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
                         "You can choose Columns between 0 to 2\n"
                     );
-                        
-                    int r = sc.nextInt();
+                    System.out.print("Your choice: ");    
+                    
+                    int r = 0;
                     int c = sc.nextInt();
                     g.book(r, c);
+                    
+                    g.showgrid();   //status after booking
+                    System.out.println("");
                 } 
                 else {
                     System.out.println("Try in Premium Section!!");
                     continue;
                 }
             } 
-            else if (usr.vehicle_type.equals("bike") && usr.getCategory == 2) {
+            else if (usr.vehicle_type.equals("bike") && cat == 2) {
                 // System.out.println(g.bikepremium()+"bike premium");
                 if (g.bikepremium() == true) {
                     g.showgrid();
-                    System.out.println("Enter row and column(Choose where 0 is there):\n" +
+                    System.out.println("");
+                    System.out.print("Enter row and column(Choose where 0 is there):\n" +
                         "---GuideLines to Choose Row and Column---\n" +
-                        "Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
+                        " Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
                         "You can choose Columns between 0 to 2\n"
                     );
+                    System.out.print("Your choice: ");  
                     
-                    int r = sc.nextInt();
+                    int r = 1;
                     int c = sc.nextInt();
                     g.book(r, c);
+                    
+                    g.showgrid();   //status after booking
+                    System.out.println("");
                 } 
                 else {
                     System.out.println("Try in General Section!!");
@@ -330,15 +351,20 @@ public class Main {
                 // System.out.println(g.cargeneral()+"car general");
                 if (g.cargeneral() == true) {
                     g.showgrid();
-                    System.out.println("Enter row and column(Choose where 0 is there):\n" +
+                    System.out.println("");
+                    System.out.print("Enter row and column(Choose where 0 is there):\n" +
                         "---GuideLines to Choose Row and Column---\n" +
-                        "Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
+                        " Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
                         "You can choose Columns between 0 to 2\n"
                     );
+                    System.out.print("Your choice: "); 
                     
-                    int r = sc.nextInt();
+                    int r = 2;
                     int c = sc.nextInt();
                     g.book(r, c);
+                    
+                    g.showgrid();   //status after booking
+                    System.out.println("");
                 }
                 else {
                     System.out.println("Try in Premium Section!!");
@@ -349,15 +375,20 @@ public class Main {
                 // System.out.println(g.carpremium()+"car premium");
                 if (g.carpremium() == true) {
                     g.showgrid();
+                    System.out.print("");
                     System.out.print("Enter row and column(Choose where 0 is there):\n" +
                         "---GuideLines to Choose Row and Column---\n" +
-                        "Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
+                        " Row 0- Bike General\n Row 1- Bike Premium\n Row 2- Car General\n Row 3- Car Premium\n" +
                         "You can choose Columns between 0 to 2\n"
                     );
+                    System.out.print("Your choice: ");
                     
-                    int r = sc.nextInt();
+                    int r = 3;
                     int c = sc.nextInt();
                     g.book(r, c);
+                    
+                    g.showgrid();   //status after booking
+                    System.out.println("");
                 } 
                 else {
                     System.out.println("Try in General Section!!");
@@ -373,8 +404,13 @@ public class Main {
             
             i--;
         }
-    
+        
+        System.out.println("Your Parking Ticket Details: ");
         usr.generateSecurityKey();
+        System.out.println("\tParking number: "+usr.getParkingNo());
+        System.out.println("\tCategory: "+usr.getCategory());
+        System.out.println("\tGenerated Security key: "+usr.getSecurityKey()+"\n\tPlease keep it private to you\n");
+        
         Bike B = new Bike();
         Car C = new Car();
         
@@ -390,66 +426,13 @@ public class Main {
             C.check();
         }
         
+        int s;
+        do{
+            s = e.exitParking();
+        }while(s==1);
         
-        
+        e.receipt_generation();
+        g.deleteParkSpace();
         
     }
 }
-
-
-
-
-
-
-    // usr.get_user_details();
-    // Facilities obj = new Facilities();
-    // obj.display_facilities();
-    // obj.PUC();
-    // if (usr.getVehicleType().equals("car")) {
-    //      Car car = new Car();
-    //      car.check();
-    // } 
-    // else {
-    //     Bike bike = new Bike();
-    //     bike.check();
-    // }
-    // g.initialize();
-    // if (usr.getVehicleType().equals("car")) {
-    //     if (obj.choice == 1) {
-    //         if (g.cargeneral()) {
-    //             g.book(2, g.i);
-    //         } 
-    //         else {
-    //             System.out.println("Parking Full");
-    //         }
-    //     } 
-    //     else {
-    //         if (g.carpremium()) {
-    //             g.book(3, g.i);
-    //         } 
-    //         else {
-    //             System.out.println("Parking Full");
-    //         }
-    //     }
-    // } 
-    // else {
-    //     if (obj.choice == 1) {
-    //     if (g.bikegeneral()) {
-    //     g.book(0, g.i);
-    //     } else {
-    //     System.out.println("Parking Full");
-    //     }
-    //     } else {
-    //     if (g.bikepremium()) {
-    //     g.book(1, g.i);
-    //     } else {
-    //     System.out.println("Parking Full");
-    //     }
-    //     }
-    //     }
-    //     Exit e = new Exit();
-    //     e.exitParking(usr);
-    //     e.receipt_generation();
-    //     g.deleteParkSpace();
-    //}
-
